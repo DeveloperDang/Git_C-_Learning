@@ -1,6 +1,5 @@
 #pragma once
 
-//#include "windows.h"
 #include <string>
 #include <WS2tcpip.h>
 #include <vector>
