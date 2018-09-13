@@ -878,7 +878,13 @@ int main(void)
 {
 	int n = 5;
 	CreateArrayQueue(n);
+	add(10);
+	add(20);
+	add(30);
 	std::cout << size() << '\n';
+	std::cout << front() << '\n';
+	pop();
+	std::cout << front() << '\n';
 
 
 	getchar();
