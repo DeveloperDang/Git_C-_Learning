@@ -659,7 +659,7 @@ int main(void)
 
 #endif
 //外观模式
-#if 1
+#if 0
 #include <iostream>
 class GetUp
 {
@@ -718,5 +718,171 @@ int main(void)
 	return 0;
 }
 
+
+#endif
+
+//单链表操作
+#if 0
+#include <iostream>
+#include <stdlib.h>
+
+typedef struct pNode {
+	int data;
+	struct pNode *next;
+} LinkList;
+
+LinkList * InitLinkList(LinkList *L)
+{
+	L = (LinkList *)malloc(sizeof(struct pNode));
+	L->next = NULL;
+	return L;
+}
+
+LinkList* CreateLinkListHead(LinkList *L, int n)
+{
+	LinkList *p = NULL;
+	for (int i = 0; i < n; i++)
+	{
+		p = (LinkList *)malloc(sizeof(struct pNode));
+		p->data = i;
+		p->next = L->next;
+		L->next = p;
+	}
+
+	return L;
+}
+
+LinkList* CreateLinkListTail(LinkList *L, int n)
+{
+	LinkList *p, *tmp;
+	p = tmp = NULL;
+	tmp = L;
+	for (int i = 0; i < n; i++)
+	{
+		p = (LinkList*)malloc(sizeof(struct pNode));
+		p->data = i;
+		p->next = NULL;
+		tmp->next = p;
+		tmp = p;
+	}
+
+	return L;
+}
+
+LinkList *InsertLinkList(LinkList *L)
+{
+
+}
+
+int GetListLength(LinkList* L)
+{
+	int len = 0;
+	LinkList* p = L->next;
+	while (p)
+	{
+		len++;
+		p = p->next;
+	}
+
+	return len;
+}
+
+int printLinkList(LinkList *L)
+{
+	LinkList *s = L->next;
+	while (s)
+	{
+		std::cout << s->data << '\n';
+		s = s->next;
+	}
+	return 1;
+}
+int main(void)
+{
+	LinkList* L = NULL;
+	LinkList *a =  InitLinkList(L);
+	a = CreateLinkListHead(a, 5);
+	std::cout << GetListLength(a) << '\n';
+	printLinkList(a);
+	getchar();
+	return 0;
+}
+
+
+#endif
+
+
+//队列操作
+
+#if 1
+
+#include <iostream>
+
+static int* arr = NULL;
+static int count;
+
+int CreateArrayQueue(int n)
+{
+	arr = (int *)malloc(sizeof(int) * n);
+	if (arr == NULL)
+	{
+		return -1;
+	}
+	count = 0;
+	return 1;
+}
+
+int destoryArrayQueue()
+{
+	if (arr != NULL)
+	{
+		delete arr;
+		arr = NULL;
+		return 1;
+	}
+	return -1;
+}
+void add(int n)
+{
+	arr[count++] = n;
+}
+
+int front()
+{
+	return arr[0];
+}
+
+int pop()
+{
+	int i = 0;
+	while (i < count)
+	{
+		arr[i] = arr[i + 1];
+		i++;
+	}
+	count--;
+	return 1;
+}
+
+int size()
+{
+	return count;
+}
+
+bool is_empty()
+{
+	return count == 0;
+}
+
+int main(void)
+{
+	int n = 5;
+	CreateArrayQueue(n);
+	std::cout << size() << '\n';
+
+
+	getchar();
+	return 0;
+}
 
 #endif
