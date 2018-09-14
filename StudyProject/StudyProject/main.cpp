@@ -738,7 +738,6 @@ LinkList * InitLinkList(LinkList *L)
 	L = (LinkList *)malloc(sizeof(struct pNode));
 	L->next = NULL;
 	LOG("InitLinkList End");
-	std::cout << __FILE__;
 	return L;
 }
 
