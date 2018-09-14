@@ -722,7 +722,7 @@ int main(void)
 #endif
 
 //单链表操作
-#if 1
+#if 0
 #include <iostream>
 #include <stdlib.h>
 #define LOG(a) std::cout << a << '\n';
@@ -989,24 +989,123 @@ int main(void)
 
 #endif
 
-#if 0
+//队列操作（链表实现）
+#if 1
 #include <iostream>
+#include <stdlib.h>
+
+
 
 typedef struct pNode {
 	int data;
 	struct pNode *next;
 }LinkList;
 
-LinkList* InitQuque()
+static LinkList *head = NULL;
+static int count = 0;
+
+LinkList* CreateNode(int n)
 {
-		
+	LinkList *p = NULL;
+	p = (LinkList*)malloc(sizeof(pNode));
+	if (p == NULL)
+	{
+		return NULL;
+	}
+	p->data= n;
+	p->next = NULL;
+
+	return p;
+}
+
+void DestroyQueue(LinkList *L)
+{
+	LinkList *p = L;
+	LinkList *temp = NULL;
+	while (p)
+	{
+		temp = p;
+		p = p->next;
+		free(temp);
+		temp = NULL;
+	}
+}
+
+static LinkList *InsertQueue(int n)
+{
+	if (head == NULL)
+	{
+		head = (LinkList*)malloc(sizeof(pNode));
+		head->data = n;
+		head->next = NULL;
+		return head;
+	}
+	LinkList *end = head;
+	LinkList *q = CreateNode(n);
+	while (end->next != NULL)
+	{
+		end = end->next;
+	}
+	end->next = q;
+	return head;
+}
+
+static int Queuefront()
+{
+	return head->data;
+}
+
+static int popQueue()
+{
+	LinkList* p = head;
+	int num = 0;
+	if (p->next == NULL)
+	{
+		free(p);
+		p = NULL;
+	}
+	else {
+		num = p->data;
+		head = p->next;
+		free(p);
+		p = NULL;
+	}
+	return num;
+}
+
+static int QueueLength()
+{
+	count = 0;
+	LinkList *p = head;
+	while (p)
+	{
+		count++;
+		p = p->next;
+
+	}
+	return count;
+}
+
+static bool QueueEmpty(LinkList *L)
+{
+	if (head)
+	{
+		return false;
+	}
 }
 
 int main(void)
 {
+	InsertQueue(10);
+	InsertQueue(20);
+	InsertQueue(30);
+    std::cout << QueueLength() << '\n';
+	std::cout << Queuefront() << '\n';
+	popQueue();
+	std::cout << QueueLength() << '\n';
+	std::cout << Queuefront() << '\n';
 
-
-
+	getchar();
 	return 0;
 }
 
