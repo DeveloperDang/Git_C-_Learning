@@ -722,9 +722,10 @@ int main(void)
 #endif
 
 //µ¥Á´±í²Ù×÷
-#if 0
+#if 1
 #include <iostream>
 #include <stdlib.h>
+#define LOG(a) std::cout << a << '\n';
 
 typedef struct pNode {
 	int data;
@@ -733,22 +734,26 @@ typedef struct pNode {
 
 LinkList * InitLinkList(LinkList *L)
 {
+	LOG("InitLinkList Start");
 	L = (LinkList *)malloc(sizeof(struct pNode));
 	L->next = NULL;
+	LOG("InitLinkList End");
+	std::cout << __FILE__;
 	return L;
 }
 
 LinkList* CreateLinkListHead(LinkList *L, int n)
 {
+	LOG("CreateLinkListHead Start");
 	LinkList *p = NULL;
 	for (int i = 0; i < n; i++)
 	{
 		p = (LinkList *)malloc(sizeof(struct pNode));
-		p->data = i;
+		p->data = i*3;
 		p->next = L->next;
 		L->next = p;
 	}
-
+	LOG("CreateLinkListHead End");
 	return L;
 }
 
@@ -760,7 +765,7 @@ LinkList* CreateLinkListTail(LinkList *L, int n)
 	for (int i = 0; i < n; i++)
 	{
 		p = (LinkList*)malloc(sizeof(struct pNode));
-		p->data = i;
+		p->data = i * 3;
 		p->next = NULL;
 		tmp->next = p;
 		tmp = p;
@@ -769,8 +774,73 @@ LinkList* CreateLinkListTail(LinkList *L, int n)
 	return L;
 }
 
-LinkList *InsertLinkList(LinkList *L)
+LinkList *InsertLinkList(LinkList *L, LinkList *Ins)
 {
+	LinkList *p = L;
+	LinkList *pre = NULL;
+	if (Ins->data < L->data)
+	{
+		Ins->next = L;
+		L = Ins;
+	}
+	else {
+		while (p != NULL && p->data < Ins->data)
+		{
+			pre = p;
+			p = p->next;
+		}
+		if (p == NULL)
+		{
+			pre->next = Ins;
+			Ins->next = NULL;
+		}
+		else {
+			pre->next = Ins;
+			Ins->next = p;
+		}
+		
+	}
+
+	return L;
+}
+
+LinkList *DeleteLinkList(LinkList *L, int n)
+{
+	LinkList *p = L;
+	LinkList *pre = NULL;
+	while (p->next != NULL && p->data != n)
+	{
+		pre = p;
+		p = p->next;
+	}
+	if (p->next == NULL)
+	{
+		std::cout << "No Found Node\n";
+	}
+	else {
+		std::cout << "FIND IT\n";
+		pre->next = p->next; 
+		free (p);
+		p = NULL;
+	}
+
+	return L;
+}
+
+void printLinkList(LinkList *L)
+{
+	if (L != NULL)
+	{
+		LinkList *p = L;
+		while (p->next != NULL)
+		{
+			int a;
+			p = p->next;
+			a = p->data;
+			std::cout << a << '\n';
+
+		}
+	}
 
 }
 
@@ -787,7 +857,7 @@ int GetListLength(LinkList* L)
 	return len;
 }
 
-int printLinkList(LinkList *L)
+int printLinkList1(LinkList *L)
 {
 	LinkList *s = L->next;
 	while (s)
@@ -797,13 +867,40 @@ int printLinkList(LinkList *L)
 	}
 	return 1;
 }
+
+void clearLinkList(LinkList *L)
+{
+	LinkList *p = L;
+	LinkList *temp = NULL;
+	while (p)
+	{
+		temp = p;
+		p = p->next;
+		free(temp);
+	}
+	L->next = NULL;
+	std::cout << "Clean end!\n";
+}
 int main(void)
 {
 	LinkList* L = NULL;
 	LinkList *a =  InitLinkList(L);
-	a = CreateLinkListHead(a, 5);
+	//a = CreateLinkListHead(a, 5);
+	a = CreateLinkListTail(a, 5);
+	//std::cout << GetListLength(a) << '\n';
+	//printLinkList(a);
+	LinkList *Ins = (LinkList *)malloc(sizeof(pNode));
+	Ins->data = 55;
+	Ins->next = NULL;
+	InsertLinkList(a, Ins);
 	std::cout << GetListLength(a) << '\n';
 	printLinkList(a);
+	DeleteLinkList(a, 6);
+	std::cout << GetListLength(a) << '\n';
+	printLinkList(a);
+
+	clearLinkList(a);
+
 	getchar();
 	return 0;
 }
@@ -893,7 +990,7 @@ int main(void)
 
 #endif
 
-#if 1
+#if 0
 #include <iostream>
 
 typedef struct pNode {
@@ -903,7 +1000,7 @@ typedef struct pNode {
 
 LinkList* InitQuque()
 {
-
+		
 }
 
 int main(void)
@@ -917,7 +1014,7 @@ int main(void)
 #endif
 
 
-
+#if 0
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -1040,3 +1137,5 @@ int main(int argc, char const *argv[])
 	PrintList(head);
 	return 0;
 }
+
+#endif
