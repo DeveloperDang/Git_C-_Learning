@@ -722,7 +722,7 @@ int main(void)
 #endif
 
 //单链表操作
-#if 1
+#if 0
 #include <iostream>
 #include <stdlib.h>
 #define LOG(a) std::cout << a << '\n';
@@ -1134,6 +1134,73 @@ int main(int argc, char const *argv[])
 	/***************************************************************/
 	DeleteList(&head);//清空列表
 	PrintList(head);
+	return 0;
+}
+
+#endif
+
+//判断两个区间是否重叠
+#if 1
+
+#include <iostream>
+#include <vector>
+typedef struct {
+	int start;
+	int end;
+}Interval;
+
+int maxNum(int x, int y)
+{
+	return  x > y ? x : y;
+}
+
+int minNum(int x, int y) 
+{
+	return x > y ? y : x;
+}
+
+
+bool isOverlap(std::vector<Interval> &iVec, Interval c)
+{
+	std::vector<Interval>::iterator it = iVec.begin();
+	for (; it != iVec.end(); ++it)
+	{
+		if (maxNum(it->start, c.start) < minNum(it->end, c.end))
+		{
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
+int main(void)
+{
+	std::vector<Interval> iVec;
+	Interval a;
+	a.start = 1;
+	a.end = 4;
+
+	Interval b;
+	b.start = 4;
+	b.end = 7;
+
+	Interval c;
+	c.start = 7;
+	c.end = 9;
+
+	iVec.push_back(a);
+	iVec.push_back(b);
+	if (isOverlap(iVec, c))
+	{
+		std::cout << "isOverlap" << std::endl;
+	}
+	else {
+		std::cout << "isNotOverlap" << std::endl;
+	}
+
+	getchar();
 	return 0;
 }
 
