@@ -990,7 +990,7 @@ int main(void)
 #endif
 
 //队列操作（链表实现）
-#if 1
+#if 0
 #include <iostream>
 #include <stdlib.h>
 
@@ -1277,17 +1277,9 @@ bool isOverlap(std::vector<Interval> &iVec, Interval c)
 int main(void)
 {
 	std::vector<Interval> iVec;
-	Interval a;
-	a.start = 1;
-	a.end = 4;
-
-	Interval b;
-	b.start = 4;
-	b.end = 7;
-
-	Interval c;
-	c.start = 7;
-	c.end = 9;
+	Interval a = {1,4};
+	Interval b = {4,7};
+	Interval c = {6,9};
 
 	iVec.push_back(a);
 	iVec.push_back(b);
