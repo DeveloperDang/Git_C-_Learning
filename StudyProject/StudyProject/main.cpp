@@ -1414,6 +1414,7 @@ int main(void)
 #endif
 
 #if 0
+
 #include <iostream>
 #include <memory>
 
@@ -1496,6 +1497,93 @@ int main() {
 		getchar();
 	}
 	//delete operator
+}
+
+#endif
+
+#if 0
+#include <iostream>
+//类型模板参数
+template <typename T>
+T& Swap(T &value1, T &value2)
+{
+	T tmp = value1;
+	value1 = value2;
+	value2 = tmp;
+	return value2;
+}
+
+//非类型模板参数
+template<int N, int M>
+void Fun(int p[N], int q[M])
+{
+	if (sizeof(p)* N < sizeof(q) * M)
+	{
+		std::cout << "More" << "\n";
+	}
+	else {
+		std::cout << "Less" << "\n";
+	}
+}
+
+int main(void)
+{
+	int a = 3, b = 7;
+	Swap<int>(a, b) = 55;
+	std::cout << a <<":"<< b << '\n';
+	int arr1[5];
+	int arr2[6];
+	Fun<4,5>(arr1, arr2);
+	getchar();
+	return 0;
+}
+
+
+#endif
+
+#if 1
+#include <iostream>
+
+template<typename T> 
+class Base {
+
+public:
+	Base(T data) :m_data(new T(data))
+	{
+
+	}
+	~Base()
+	{
+		if (m_data != NULL)
+		{
+			delete m_data;
+		}
+	}
+
+	T* getData(T* index)
+	{
+	/*	if (index != NULL)
+		{
+			index = m_data;
+		}*/
+		return m_data;
+	}
+
+private:
+	T* m_data;
+};
+
+int main(void)
+{
+	int a = 5;
+	Base<int> obj(a);
+	int y;
+	int *x = obj.getData(&y);
+	std::cout << *x << std::endl;
+
+
+	getchar();
+	return 0;
 }
 
 
