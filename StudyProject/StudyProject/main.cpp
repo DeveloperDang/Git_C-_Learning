@@ -1601,138 +1601,67 @@ int main(void)
 
 
 #endif
-#if 1
-// test_console.cpp : 定义控制台应用程序的入口点。
-//
 
-#include "stdafx.h"
+
+//递归思想解决字符串翻转
+#if 0
+#define  _CRT_SECURE_NO_WARNINGS 
 #include <stdio.h>
-#include <iostream>
 #include <windows.h>
 
-using namespace std;
-
-#define SLEEP_TIME 5000 //间隔时间
-
-#define FILE_PATH "C:\\log.txt" //信息输出文件
-
-bool brun = false;
-
-SERVICE_STATUS servicestatus;
-
-SERVICE_STATUS_HANDLE hstatus;
-
-int WriteToLog(char* str);
-
-void WINAPI ServiceMain(int argc, char** argv);
-
-void WINAPI CtrlHandler(DWORD request);
-
-int InitService();
-
-int WriteToLog(char* str)
+void print()
+{
+	char a;
+	scanf("%c", &a);
+	if (a != '#') print();
+	if (a != '#') printf("%c", a);
+}
+int main(void)
 {
 
-	FILE* pfile;
-	fopen_s(&pfile, FILE_PATH, "a+");
-	if (pfile == NULL)
-	{
-		return -1;
-	}
-	fprintf_s(pfile, "%s\n", str);
-	fclose(pfile);
+	print();
+
+	getchar();
+	system("pause");
 	return 0;
 }
 
-void WINAPI ServiceMain(int argc, char** argv)
+#endif
+//二分法查找
+#if 1
+#include<iostream>
+
+int binSearch(int arr[], int len, int key)
 {
-	servicestatus.dwServiceType = SERVICE_WIN32;
-	servicestatus.dwCurrentState = SERVICE_START_PENDING;
-	servicestatus.dwControlsAccepted = SERVICE_ACCEPT_SHUTDOWN | SERVICE_ACCEPT_STOP;//在本例中只接受系统关机和停止服务两种控制命令
-	servicestatus.dwWin32ExitCode = 0;
-	servicestatus.dwServiceSpecificExitCode = 0;
-	servicestatus.dwCheckPoint = 0;
-	servicestatus.dwWaitHint = 0;
-
-	hstatus = ::RegisterServiceCtrlHandler(L"testservice", CtrlHandler);
-
-	if (hstatus == 0)
-
+	int low = 0;
+	int high = len - 1;
+	int mid;// = (low + high) / 2;
+	while (low <= high)
 	{
-
-		WriteToLog("RegisterServiceCtrlHandler failed");
-		return;
-
+		mid = (low + high) / 2;
+		if (arr[mid] == key)
+		{
+			return mid;
+		}
+		if (key < arr[mid])
+		{
+			high = mid;
+		}
+		else if (key > arr[mid])
+		{
+			low = mid + 1;
+		}
 	}
 
-	WriteToLog("RegisterServiceCtrlHandler success");
-
-	//向SCM 报告运行状态
-
-	servicestatus.dwCurrentState = SERVICE_RUNNING;
-
-	SetServiceStatus(hstatus, &servicestatus);
-
-	//下面就开始任务循环了，你可以添加你自己希望服务做的工作
-
-	brun = true;
-
-	MEMORYSTATUS memstatus;
-
-	char str[100];
-
-	memset(str, '\0', 100);
-
-	while (brun)
-	{
-		GlobalMemoryStatus(&memstatus);
-		int availmb = memstatus.dwAvailPhys / 1024 / 1024;
-		sprintf_s(str, 100, "available memory is %dMB", availmb);
-		WriteToLog(str);
-		Sleep(SLEEP_TIME);
-	}
-	WriteToLog("service stopped");
+	return - 1;
 }
-
-void WINAPI CtrlHandler(DWORD request)
+int main(void)
 {
-	switch (request)
-	{
-	case SERVICE_CONTROL_STOP:
-		brun = false;
-		servicestatus.dwCurrentState = SERVICE_STOPPED;
-		break;
-
-	case SERVICE_CONTROL_SHUTDOWN:
-		brun = false;
-		servicestatus.dwCurrentState = SERVICE_STOPPED;
-		break;
-
-	default:
-		break;
-	}
-
-	SetServiceStatus(hstatus, &servicestatus);
-}
-
-
-int _tmain(int argc, _TCHAR* argv[])
-{
-	SERVICE_TABLE_ENTRY entrytable[2];
-
-	entrytable[0].lpServiceName = L"testservice";
-
-	entrytable[0].lpServiceProc = (LPSERVICE_MAIN_FUNCTION)ServiceMain;
-
-	entrytable[1].lpServiceName = NULL;
-
-	entrytable[1].lpServiceProc = NULL;
-
-	StartServiceCtrlDispatcher(entrytable);
-
+	int arr[10] = { 1,2,5,6,7,8,11,22,33,44 };
+	int n = binSearch(arr, 10,7);
+	std::cout << n + 1 << '\n';
+	getchar();
 	return 0;
-}
-
-
+ }
 
 #endif
