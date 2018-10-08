@@ -1776,7 +1776,7 @@ int main(void)
 
 #endif
 
-#if 1
+#if 0
 #include <iostream>
 /*
 * 直接插入排序
@@ -1865,5 +1865,85 @@ int main(void)
 	return 0;
 }
 
+
+#endif
+
+#if 0
+#include<iostream>
+//选择排序每次循环找出数组中最大/最小元素，然后将该元素赋值给a[0],a[1],a[2]
+void selectionSort(int *a, int n)
+{
+	int min;
+	for (int i = 0; i < n; i++)
+	{
+		min = i;
+		for (int j = i + 1; j < n; j++)
+		{
+			if (a[min] > a[j])
+			{
+				min = j;
+			}
+		}
+
+		if (i != min)
+		{
+			std::swap(a[i], a[min]);
+		}
+	}
+}
+
+int main(void)
+{
+	int a[10] = { 2,4,5,1,8,9,11,33,0,22 };
+	selectionSort(a, 10);
+	for (int i = 0; i < 10; i++)
+	{
+		std::cout << a[i] << " ";
+	}
+
+	getchar();
+
+
+	return 0;
+}
+
+#endif
+
+#if 1
+//桶排序
+
+#include<iostream>
+
+void bucketSort(int *a, int n)
+{
+	int i, j;
+	int *bucket = (int *)malloc(sizeof(int) * n);
+	memset(bucket, 0x00, sizeof(int)*n);
+	for (i = 0; i < n; i++)
+	{
+		bucket[a[i]]++;
+	}
+
+	for (i = 0, j = 0; i < n; i++)
+	{
+		while (bucket[i] -- > 0)
+		{
+			a[j++] = i;
+		}
+	}
+}
+
+int main(void)
+{
+	int a[10] = { 2,4,5,1,8,9,3,6,7,0 };
+	bucketSort(a, 10);
+	for (int i = 0; i < 10; i++)
+	{
+		std::cout << a[i] << " ";
+	}
+
+	getchar();
+	return 0;
+}
 
 #endif
