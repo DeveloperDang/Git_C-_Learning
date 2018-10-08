@@ -1628,7 +1628,7 @@ int main(void)
 
 #endif
 //二分法查找
-#if 1
+#if 0
 #include<iostream>
 
 int binSearch(int arr[], int len, int key)
@@ -1663,5 +1663,189 @@ int main(void)
 	getchar();
 	return 0;
  }
+
+#endif
+#if 0
+
+#include <iostream>
+//普通冒泡排序
+void bubbleSort1(int *a, int n)
+{
+	for (int i = 0; i < n; i++) //外层的for循环是控制内层for循环的次数，除此之外没有其他用处，每一次循环冒泡出一个最大值后，循环次数减1
+	{
+		for (int j = 0; j < n - i - 1; j++)
+		{
+			if (a[j] > a[j + 1])
+			{
+				int t = a[j];
+				a[j] = a[j+1];
+				a[j+1] = t;
+			}
+		}
+	}
+}
+//改进后冒泡排序，对于有些排序是在一轮或者二轮后就已经完成，所以不需要后面的步骤
+void bubbleSort2(int *a, int n)
+{
+	int flag = 0;
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n - i - 1; j++)
+		{
+			if (a[j] > a[j + 1])
+			{
+				int t = a[j];
+				a[j] = a[j + 1];
+				a[j + 1] = t;
+				flag = 1;
+			}
+		}
+		if (flag == 0)
+		{
+			std::cout << "第" << i << "轮后排序完成" << std::endl;
+			break;
+		}
+	}
+
+}
+
+int main(void)
+{
+
+	int a[10] = { 2,4,5,1,8,9,11,33,0,22 };
+	bubbleSort2(a, 10);
+	for (int i = 0; i < 10; i++)
+	{
+		std::cout << a[i] << " ";
+	}
+	getchar();
+	return 0;
+}
+#endif
+
+#if 0
+//快速排序 分之思想
+#include <iostream>
+void quickSort(int *a, int l, int r)
+{
+	if (l < r)
+	{
+		int i = l;
+		int j = r;
+		int x = a[i];
+		while (i < j)
+		{
+			while (i < j && a[j] > x)
+			{
+				j--;
+			}
+			if (i < j)
+			{
+				a[i] = a[j];
+				i++;
+			}
+
+			while (i < j && a[i] < x)
+			{
+				i++;
+			}
+			if (i < j)
+			{
+				a[j] = a[i];
+				j--;
+			}
+		}
+		a[i] = x;
+		quickSort(a, l, i - 1);
+		quickSort(a, i + 1, r);
+	}
+}
+
+int main(void)
+{
+	int a[10] = { 2,4,5,1,8,9,11,33,0,22 };
+	quickSort(a, 0, 9);
+	for (int i = 0; i < 10; i++)
+	{
+		std::cout << a[i] << " ";
+	}
+
+	getchar();
+}
+
+
+#endif
+
+#if 1
+#include <iostream>
+/*
+* 直接插入排序
+*
+* 参数说明：
+*     a -- 待排序的数组
+*     n -- 数组的长度
+*/
+//void insert_sort(int a[], int n)
+//{
+//	int i, j, k;
+//
+//	for (i = 1; i < n; i++)
+//	{
+//		//为a[i]在前面的a[0...i-1]有序区间中找一个合适的位置
+//		for (j = i - 1; j >= 0; j--)
+//			if (a[j] < a[i])
+//				break;
+//
+//		//如找到了一个合适的位置
+//		if (j != i - 1)
+//		{
+//			//将比a[i]大的数据向后移
+//			int temp = a[i];
+//			for (k = i - 1; k > j; k--)
+//				a[k + 1] = a[k];
+//			//将a[i]放到正确位置上
+//			a[k + 1] = temp;
+//		}
+//	}
+//}
+
+void insertSort(int *a, int n)
+{
+	int i, j, k;
+	for (i = 1; i < n; i++)
+	{
+		for (j = i - 1; j >= 0; j--)
+		{
+			if (a[i] > a[j])
+			{
+				break;
+			}
+		}
+
+		if (j != i - 1)
+		{
+			int t = a[i];
+			for (k = j; k < i; k++)
+			{
+				a[k + 1] = a[k];
+			}
+			a[j] = t;
+		}
+	}
+
+}
+int main(void)
+{
+	int a[10] = { 2,4,5,1,8,9,11,33,0,22 };
+	insertSort(a, 10);
+	for (int i = 0; i < 10; i++)
+	{
+		std::cout << a[i] << " ";
+	}
+
+	getchar();
+	return 0;
+}
+
 
 #endif
