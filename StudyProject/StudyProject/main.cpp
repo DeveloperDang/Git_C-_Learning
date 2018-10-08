@@ -1785,51 +1785,69 @@ int main(void)
 *     a -- 待排序的数组
 *     n -- 数组的长度
 */
-//void insert_sort(int a[], int n)
-//{
-//	int i, j, k;
-//
-//	for (i = 1; i < n; i++)
-//	{
-//		//为a[i]在前面的a[0...i-1]有序区间中找一个合适的位置
-//		for (j = i - 1; j >= 0; j--)
-//			if (a[j] < a[i])
-//				break;
-//
-//		//如找到了一个合适的位置
-//		if (j != i - 1)
-//		{
-//			//将比a[i]大的数据向后移
-//			int temp = a[i];
-//			for (k = i - 1; k > j; k--)
-//				a[k + 1] = a[k];
-//			//将a[i]放到正确位置上
-//			a[k + 1] = temp;
-//		}
-//	}
-//}
-
-void insertSort(int *a, int n)
+void insert_sort(int a[], int n)
 {
 	int i, j, k;
+
 	for (i = 1; i < n; i++)
 	{
+		//为a[i]在前面的a[0...i-1]有序区间中找一个合适的位置
 		for (j = i - 1; j >= 0; j--)
-		{
-			if (a[i] > a[j])
-			{
+			if (a[j] < a[i])
 				break;
-			}
-		}
 
+		//如找到了一个合适的位置
 		if (j != i - 1)
 		{
-			int t = a[i];
-			for (k = j; k < i; k++)
-			{
+			//将比a[i]大的数据向后移
+			int temp = a[i];
+			for (k = i - 1; k > j; k--)
 				a[k + 1] = a[k];
+			//将a[i]放到正确位置上
+			a[k + 1] = temp;
+		}
+	}
+}
+//
+//void insertSort(int *a, int n)
+//{
+//	int i, j, k;
+//	for (i = 1; i < n; i++)
+//	{
+//		for (j = i - 1; j >= 0; j--)
+//		{
+//			if (a[i] > a[j])
+//			{
+//				break;
+//			}
+//		}
+//
+//		if (j != i - 1)
+//		{
+//			int t = a[i];
+//			for (k = j; k < i; k++)
+//			{
+//				a[k + 1] = a[k];
+//			}
+//			a[j] = t;
+//		}
+//	}
+//
+//}
+//整体思想是从一个无序数组中每次插入数字到有序数组中，如果插入有序数组后不满足调节则进行交换
+void insertSort(int *a, int n)
+{
+	for (int i = 1; i < n; i++)
+	{
+		//for (int j = i - 1; j >= 0; j--)
+		for(int j = 0; j < i; j++)
+		{
+			if (a[i] < a[j])
+			{
+				int t = a[i];
+				a[i] = a[j];
+				a[j] = t;
 			}
-			a[j] = t;
 		}
 	}
 
