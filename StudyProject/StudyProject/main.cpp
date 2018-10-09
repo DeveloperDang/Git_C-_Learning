@@ -2233,7 +2233,78 @@ int main(void)
 	return 0;
 }
 
-
-
 #endif
 
+//循环队列
+#if 1
+#include <iostream>
+
+#define MAXSIZE 5
+typedef struct {
+	int *base;
+	int rear;
+	int front;
+	
+}Node;
+
+void initNode(Node *p)
+{
+	p->base = (int *)malloc(sizeof(int) * MAXSIZE);
+	if(p->base == NULL)
+	{
+		return;
+	}
+	p->front = p->rear = 0;
+}
+
+void pushNode(Node *p, int x)
+{
+	if ((p->rear + 1) % MAXSIZE == p->front)
+	{
+		std::cout << "满队列" << '\n';
+		return ;
+	}
+	p->base[p->rear] = x;
+	p->rear = p->rear + 1 % MAXSIZE;
+}
+
+void popNode(Node *p)
+{
+	if (p->front == p->rear)
+	{
+		std::cout << "空队列" << '\n';
+		return;
+	}
+	p->front = p->front + 1 % MAXSIZE;
+}
+
+void printNode(Node *p)
+{
+	if (p->front == p->rear)
+	{
+		std::cout << "空队列，不打印" << '\n';
+		return;
+	}
+	for (int i = p->front; i < p->rear; i++)
+	{
+		std::cout << p->base[i] << " ";
+	}
+	std::cout << "\n---------------------------------------------------------\n";
+}
+
+int main(void)
+{
+	Node p;
+	initNode(&p);
+	pushNode(&p, 2);
+	pushNode(&p, 5);
+	pushNode(&p, 6);
+	pushNode(&p, 7);
+	pushNode(&p, 9);
+	printNode(&p);
+	popNode(&p);
+	printNode(&p);
+	getchar();
+	return 0;
+}
+#endif
