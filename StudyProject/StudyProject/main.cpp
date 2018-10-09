@@ -2035,7 +2035,7 @@ int main(void)
 
 //单链表操作
 
-#if 1
+#if 0
 #include <iostream>
 
 typedef struct Node {
@@ -2165,6 +2165,21 @@ bool isEmpty(pNode *head)
 	return true;
 }
 
+pNode * destoryList(pNode *head)
+{
+	pNode *p = head;
+	pNode *tmp = NULL;
+	while (p)
+	{
+		tmp = p;
+		p = p->next;
+		free (tmp);
+		tmp = NULL;
+	}
+	head = NULL;
+	return head;
+}
+
 pNode *reverseList(pNode *head)
 {
 	if (head == NULL || head->next == NULL)
@@ -2176,10 +2191,10 @@ pNode *reverseList(pNode *head)
 	tmp = newH = NULL;
 	while (p)
 	{
-		tmp = p->next;
-		p->next = newH;
-		newH = p;
-		p = tmp;
+		tmp = p->next;   //将一个节点存放到临时变量中，以便下次可以找到
+		p->next = newH;  //当前节点的next指向上一个节点
+		newH = p;       //新的节点头指向当前节点
+		p = tmp;        //p节点指向下一个节点
 	}
 
 	return newH;
@@ -2211,6 +2226,9 @@ int main(void)
 
 	p = reverseList(p);
 	print(p);
+
+	p = destoryList(p);
+	std::cout << "Node Length is " << NodeLen(p) << '\n';
 	getchar();
 	return 0;
 }
@@ -2218,3 +2236,4 @@ int main(void)
 
 
 #endif
+
