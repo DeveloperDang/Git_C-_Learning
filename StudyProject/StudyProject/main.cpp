@@ -1909,7 +1909,7 @@ int main(void)
 
 #endif
 
-#if 1
+#if 0
 //桶排序
 
 #include<iostream>
@@ -1945,5 +1945,276 @@ int main(void)
 	getchar();
 	return 0;
 }
+
+#endif
+
+#if 0
+#include<iostream>
+/*
+* 希尔排序
+*
+* 参数说明：
+*     a -- 待排序的数组
+*     n -- 数组的长度
+*/
+void shell_sort1(int a[], int n)
+{
+	int i, j, gap;
+
+	// gap为步长，每次减为原来的一半。
+	for (gap = n / 2; gap > 0; gap /= 2)
+	{
+		// 共gap个组，对每一组都执行直接插入排序
+		for (i = 0; i < gap; i++)
+		{
+			for (j = i + gap; j < n; j += gap)
+			{
+				// 如果a[j] < a[j-gap]，则寻找a[j]位置，并将后面数据的位置都后移。
+				if (a[j] < a[j - gap])
+				{
+					int tmp = a[j];
+					int k = j - gap;
+					while (k >= 0 && a[k] > tmp)
+					{
+						a[k + gap] = a[k];
+						k -= gap;
+					}
+					a[k + gap] = tmp;
+				}
+			}
+		}
+
+	}
+}
+
+
+void shellSort(int *a, int n)
+{
+	int i, j, gap;
+	for (gap = n / 2; gap > 0; gap /= 2)
+	{
+		for (i = 0; i < gap; i++)
+		{
+			for (j = i + gap; j < n; j += gap)
+			{
+				for (int k = j - gap; k >= 0; k -= gap)
+				{
+					if (a[k] < a[j])
+					{
+						int t = a[k];
+						a[k] = a[j];
+						a[j] = t;
+					}
+				}
+				/*if (a[j] < a[j - gap])
+				{
+					int t = a[j];
+					a[j] = a[j - gap];
+					a[j - gap] = t;
+				}*/
+			}
+		}
+	}
+}
+int main(void)
+{
+	int a[10] = { 2,4,5,1,8,9,0,3,6,7 };
+	shellSort(a, 10);
+	for (int i = 0; i < 10; i++)
+	{
+		std::cout << a[i] << " ";
+	}
+
+	getchar();
+
+	return 0;
+}
+
+
+#endif
+
+//单链表操作
+
+#if 1
+#include <iostream>
+
+typedef struct Node {
+	int data;
+	struct Node *next;
+}pNode;
+
+pNode *InitNode(int n)
+{
+	pNode *head, *p, *q;
+	head = p = NULL;
+	q = NULL;
+
+	for (int i = 0; i < n; i++)
+	{
+		p = (pNode*)malloc(sizeof(pNode));
+		p->data = i*3 + 4;
+		if (i == 0)
+		{
+			head = p;
+		}
+		else {
+			
+			q->next = p;
+
+		}
+		q = p;
+		q->next = NULL;
+	}
+	
+	return head;
+}
+
+
+pNode *insertNode(pNode *head, pNode *iNode)
+{
+	pNode *p = head;
+	Node *q = NULL;
+	if (p->data > iNode->data)
+	{
+		iNode->next = p;
+		head = iNode;
+	}
+	else {
+			while (p->next != NULL && p->data < iNode->data)
+			{
+				q = p;
+				p = p->next;
+			}
+			if (p->next == NULL)
+			{
+				p->next = iNode;
+			}
+			else {
+				q->next = iNode;
+				iNode->next = p;
+			}
+		}
+
+	return head;
+}
+
+pNode *deleteNode(pNode *head, int n)
+{
+	pNode *p = head;
+	pNode *q = NULL;
+	if (p->data == n)
+	{
+		head = p->next;
+		pNode *tmp = p;
+		delete tmp;
+		tmp = NULL;
+	}
+	else {
+		while (p != NULL && p->data != n)
+		{
+			q = p;
+			p = p->next;
+		}
+		if (p == NULL)
+		{
+			std::cout << "delete number is not found\n";
+		}
+		else {
+			q->next = q->next->next;
+			pNode *tmp = p;
+			delete tmp;
+			tmp = NULL;
+
+		}
+	}
+
+	return head;
+}
+
+void print(pNode *head)
+{
+	pNode *p = head;
+	while (p != NULL)
+	{
+		std::cout << p->data << "  ";
+		p = p->next;
+	}
+	std::cout << "\n---------------------------------------------------------------------\n";
+
+}
+
+int NodeLen(pNode *head)
+{
+	pNode *p = head;
+	int count = 0;
+	while (p != NULL)
+	{
+		count++;
+		p = p->next;
+	}
+
+	return count;
+}
+
+bool isEmpty(pNode *head)
+{
+	if (head)
+	{
+		return false;
+	}
+	return true;
+}
+
+pNode *reverseList(pNode *head)
+{
+	if (head == NULL || head->next == NULL)
+	{
+		return NULL;
+	}
+	pNode *p = head;
+	pNode *tmp, *newH;
+	tmp = newH = NULL;
+	while (p)
+	{
+		tmp = p->next;
+		p->next = newH;
+		newH = p;
+		p = tmp;
+	}
+
+	return newH;
+}
+
+int main(void)
+{
+
+	pNode *p = InitNode(10);
+	print(p);
+	pNode *iNode = (pNode *)malloc(sizeof(pNode));
+	iNode->data = 17;
+	iNode->next = NULL;
+
+	p = insertNode(p, iNode);
+	print(p);
+
+	p = deleteNode(p, 17);
+	print(p);
+
+	std::cout << "Node Length is " << NodeLen(p) << '\n';
+	if (isEmpty(p))
+	{
+		std::cout << "List is empty" << '\n';
+	}
+	else {
+		std::cout << "List is not empty" << '\n';
+	}
+
+	p = reverseList(p);
+	print(p);
+	getchar();
+	return 0;
+}
+
+
 
 #endif
