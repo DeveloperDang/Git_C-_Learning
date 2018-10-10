@@ -2310,7 +2310,7 @@ int main(void)
 #endif
 
 
-#if 1
+#if 0
 #include <iostream>
 
 #define MAXSIZE 10
@@ -2384,6 +2384,139 @@ int main(void)
 	printQueue(&p);
 
 	getchar();
+	return 0;
+}
+#endif
+
+#if 0
+#include <iostream>
+typedef struct Node{
+	int data;
+	struct Node *next;
+}pNode;
+
+pNode *createNode(int n)
+{
+	pNode *head, *p, *q;
+	head = p = q = NULL;
+	for (int i = 0; i < n; i++)
+	{
+		p = (pNode *)malloc(sizeof(pNode));
+		p->data = i * 4;
+		if (!p)
+		{
+			std::cout << "malloc error" << '\n';
+		}
+		if (i == 0)
+		{
+			head = p;
+		}
+		else {
+			q->next = p;
+		}
+		q = p;
+		q->next = NULL;
+	}
+	return head;
+}
+
+pNode *reverseList(pNode *head)
+{
+	pNode *p = head;
+	pNode *tmp, *newH;
+	tmp = newH = NULL;
+	while (p)
+	{
+		tmp = p->next;
+		p->next = newH;
+		newH = p;
+		p = tmp;
+	}
+	return newH;
+}
+
+
+void print(pNode *head)
+{
+	pNode *p = head;
+	while (p)
+	{
+		std::cout << p->data << " ";
+		p = p->next;
+	}
+	std::cout << "\n--------------------------------------------\n";
+}
+int main(void)
+{
+
+	pNode *p = createNode(10);
+	print(p);
+	p = reverseList(p);
+	print(p);
+
+	getchar();
+	return 0;
+}
+
+
+#endif
+
+#if 0
+
+//Ã°ÅÝÅÅÐò
+#include <iostream> 
+
+void swapNum(int *, int *);
+
+void bubbleSort(int *a, int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n - i - 1 ; j++)
+		{
+			if (a[j] > a[j + 1])
+			{
+				swapNum(&(a[j]), &(a[j + 1]));
+			}
+		}
+	}
+
+	//for (int i = 0; i < n; i++)
+	//{
+	//	for (int j = 1; j < n - i; j++)
+	//	{
+	//		if (a[j - 1] > a[j])
+	//		{
+	//			swapNum(&(a[j - 1]), &(a[j]));
+	//		}
+	//	}
+	//}
+
+}
+
+void print(int *a, int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		std::cout << a[i] << " ";
+	}
+	std::cout << "\n------------------------------------\n";
+}
+
+void swapNum(int *x, int *y)
+{
+	*x = *x ^ *y;
+	*y = *x ^ *y;
+	*x = *x ^ *y;
+}
+
+int main(void)
+{
+	int a[10] = { 4,5,1,23,7,2,0,6,9,3 };
+	bubbleSort(a, 10);
+	print(a, sizeof(a) / sizeof(int));
+	getchar();
+
 	return 0;
 }
 #endif
