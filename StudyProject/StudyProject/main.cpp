@@ -2236,7 +2236,7 @@ int main(void)
 #endif
 
 //循环队列
-#if 1
+#if 0
 #include <iostream>
 
 #define MAXSIZE 5
@@ -2304,6 +2304,85 @@ int main(void)
 	printNode(&p);
 	popNode(&p);
 	printNode(&p);
+	getchar();
+	return 0;
+}
+#endif
+
+
+#if 1
+#include <iostream>
+
+#define MAXSIZE 10
+
+typedef struct Node {
+	int *base;
+	int rear;
+	int front;
+} pNode;
+
+void initQueue(pNode *p)
+{
+	p->base = (int *)malloc(sizeof(int) * MAXSIZE);
+	if (!p->base)
+	{
+		return;
+	}
+	p->front = p->rear = 0;
+}
+
+void pushQueue(pNode *p, int x)
+{
+	if ((p->rear + 1) % MAXSIZE == p->front)
+	{
+		std::cout << "队列满" << '\n';
+		return;
+	}
+	p->base[p->rear] = x;
+	p->rear = (p->rear + 1) % MAXSIZE;
+
+}
+
+void popQueue(pNode *p)
+{
+	if (p->front == p->rear)
+	{
+		std::cout << "空队列" << '\n';
+		return;
+	}
+	p->front = (p->front + 1) % MAXSIZE;
+
+}
+
+void printQueue(pNode *p)
+{
+	if (p->front == p->rear)
+	{
+		return;
+	}
+	for (int i = p->front; i < p->rear; i++)
+	{
+		std::cout << p->base[i] << " ";
+	}
+	std::cout << "\n------------------------------------------------\n";
+}
+ 
+int main(void)
+{
+	pNode p;
+	initQueue(&p);
+	pushQueue(&p, 2);
+	pushQueue(&p, 1);
+	pushQueue(&p, 5);
+	pushQueue(&p, 12);
+	pushQueue(&p, 22);
+	pushQueue(&p, 11);
+	pushQueue(&p, 9);
+	pushQueue(&p, 4); 
+	pushQueue(&p, 7);
+	pushQueue(&p, 6);
+	printQueue(&p);
+
 	getchar();
 	return 0;
 }
