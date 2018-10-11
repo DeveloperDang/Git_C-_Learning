@@ -2683,7 +2683,7 @@ int main(void)
 #endif
 
 //希尔排序 党仁磊
-#if 1
+#if 0
 #include <iostream>
 
 void swapNum(int *x, int *y)
@@ -2729,5 +2729,162 @@ int main(void)
 	return 0;
 }
 
+#endif
+
+
+#if 0
+#include <iostream>
+
+void HeapAdjust(int *array, int parent, int length) {
+	int temp = array[parent]; // temp保存当前父节点
+	int child = 2 * parent + 1; // 先获得左孩子
+
+	while (child < length) {
+		// 如果有右孩子结点，并且右孩子结点的值大于左孩子结点，则选取右孩子结点
+		if (child + 1 < length && array[child] < array[child + 1]) {
+			child++;
+		}
+
+		// 如果父结点的值已经大于孩子结点的值，则直接结束
+		if (temp >= array[child])
+			break;
+
+		// 把孩子结点的值赋给父结点
+		array[parent] = array[child];
+
+		// 选取孩子结点的左孩子结点,继续向下筛选
+		parent = child;
+		child = 2 * child + 1;
+	}
+
+	array[parent] = temp;
+}
+void maxheap_down(int a[], int start, int end)
+{
+	int c = start;            // 当前(current)节点的位置
+	int l = 2 * c + 1;        // 左(left)孩子的位置
+	int tmp = a[c];            // 当前(current)节点的大小
+	for (; l <= end; c = l, l = 2 * l + 1)
+	{
+		// "l"是左孩子，"l+1"是右孩子
+		if (l < end && a[l] < a[l + 1])
+			l++;        // 左右两孩子中选择较大者，即m_heap[l+1]
+		if (tmp >= a[l])
+			break;        // 调整结束
+		else            // 交换值
+		{
+			a[c] = a[l];
+			a[l] = tmp;
+		}
+	}
+}
+
+void Swap(int * array, int  i, int  j)
+{
+	//assert(array);
+	int  tmp;
+	tmp = array[j];
+	array[j] = array[i];
+	array[i] = tmp;
+}
+
+/*大根堆调整*/
+void MaxHeapify(int * array, int  heapSize, int  currentNode)
+{
+	int  leftChild, rightChild, largest;
+	leftChild = 2 * currentNode + 1;
+	rightChild = 2 * currentNode + 2;
+	if (leftChild < heapSize && array[leftChild] > array[currentNode])
+		largest = leftChild;
+	else
+		largest = currentNode;
+	if (rightChild < heapSize && array[rightChild] > array[largest])
+		largest = rightChild;
+	if (largest != currentNode)
+	{
+		Swap(array, largest, currentNode);
+		MaxHeapify(array, heapSize, largest);
+	}
+}
+
+/*构建大根堆*/
+void MaxHeapCreate(int * array, int  heapSize)
+{  /*注意:这里只是经过一次堆调整之后,并不是将这些数完全用堆排序完成排序*/
+
+	int i;
+	for (i = heapSize / 2; i >= 0; i--)
+	{
+		MaxHeapify(array, heapSize, i);
+	}
+}
+void print(int *a, int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		std::cout << a[i] << " ";
+	}
+	std::cout << "\n------------------------------------\n";
+}
+
+int main(void)
+{
+	//int a[10] = { 4,5,1,23,7,2,0,6,9,3 };
+	//int a[] = {1, 3, 4, 5, 2, 6, 9, 7, 8, 0};
+	//int a[] = { 3,8,6,4,5,2,9 };
+	int a[] = { 20,30,90,40,70,110,60,10,100,50,80 };
+	for (int i = 10 / 2 - 1; i >= 0; i--)
+		maxheap_down(a, i, 10 - 1);//sizeof(a) / sizeof(int) - 1);
+	//HeapAdjust(a, 0, sizeof(a) / sizeof(int) - 1);
+	//MaxHeapCreate(a, 10);
+	print(a, sizeof(a) / sizeof(int));
+	getchar();
+	return 0;
+}
+
+#endif
+
+#if 0
+#include <iostream>
+
+void HeapCreate(int *a, int low, int n)
+{
+	int c = low;
+	int leftChild = c * 2 + 1;  //找到父节点下面的左节点
+	int tmp = a[c];  //保存父节点的值
+	for(; leftChild <= n; leftChild = leftChild * 2 + 1)
+	{
+		if (leftChild < n && a[leftChild] < a[leftChild + 1])
+		{
+			leftChild++;
+		}
+		if (tmp > a[leftChild])
+		{
+			break;
+		}
+		else {
+			a[c] = a[leftChild];
+			c = leftChild;
+		}
+	}
+	a[leftChild] = tmp;
+}
+void print(int *a, int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		std::cout << a[i] << " ";
+	}
+	std::cout << "\n------------------------------------\n";
+}
+int main(void)
+{
+	int a[] = { 20,30,90,40,70,110,60,10,100,50,80 };
+	for (int i = 10 / 2 - 1; i >= 0; i--)
+		HeapCreate(a, i, 10 - 1);
+	print(a, 11);
+
+	getchar();
+	return 0;
+}
 
 #endif
