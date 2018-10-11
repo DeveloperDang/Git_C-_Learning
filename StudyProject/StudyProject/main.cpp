@@ -2520,3 +2520,164 @@ int main(void)
 	return 0;
 }
 #endif
+
+
+#if 0
+#include <iostream>
+
+void quickSort(int *a, int low,int high)
+{
+	int l = low;
+	int r = high;
+	int flag = a[l];
+	if (l < r)
+	{
+		while (l < r)
+		{
+			while (l < r && a[r] > flag)
+			{
+				r--;
+			}
+			if (l < r)
+			{
+				a[l] = a[r];
+				l++;
+			}
+
+			while (l < r && a[l] < flag)
+			{
+				l++;
+			}
+			if (l < r)
+			{
+				a[r] = a[l];
+				r--;
+			}
+		}
+		a[l] = flag;
+		quickSort(a, low, l - 1);
+		quickSort(a, r + 1, high);
+	
+	}
+}
+void print(int *a, int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		std::cout << a[i] << " ";
+	}
+	std::cout << "\n------------------------------------\n";
+}
+int main(void)
+{
+	int a[10] = { 4,5,1,23,7,2,0,6,9,3 };
+	quickSort(a, 0, 9);
+	print(a, sizeof(a) / sizeof(int));
+	getchar();
+
+	return 0;
+}
+
+#endif
+
+//²åÈëÅÅÐò
+#if 0
+#include<iostream>
+
+void swapNum(int *x, int *y)
+{
+	*x = *x ^ *y;
+	*y = *x ^ *y;
+	*x = *x ^ *y;
+}
+
+void insertSort(int *a, int n)
+{
+	for (int i = 1; i < n; i++)
+	{
+		for (int j = 0; j < i; j++)
+		{
+			if (a[i] < a[j])
+			{
+				swapNum(&(a[i]), &(a[j]));
+			}
+		}
+	}
+}
+
+void print(int *a, int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		std::cout << a[i] << " ";
+	}
+	std::cout << "\n------------------------------------\n";
+}
+
+int main(void)
+{
+	int a[10] = { 4,5,1,23,7,2,0,6,9,3 };
+	insertSort(a, 10);
+	print(a, sizeof(a) / sizeof(int));
+	getchar();
+
+	return 0;
+}
+
+
+#endif
+
+//Ñ¡ÔñÅÅÐò
+#if 1
+
+#include <iostream>
+
+void swapNum(int *x, int *y)
+{
+	*x = *x ^ *y;
+	*y = *x ^ *y;
+	*x = *x ^ *y;
+}
+
+void selectionSort(int *a, int n)
+{
+	int min, i, j;
+	for (i = 0; i < n; i++)
+	{
+		min = i;
+		for (j = i + 1; j < n; j++)
+		{
+			if (a[min] > a[j])
+			{
+				min = j;
+			}
+		}
+		if (min != i)
+		{
+			swapNum(&(a[min]), &(a[i]));
+		}
+	}
+}
+
+void print(int *a, int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		std::cout << a[i] << " ";
+	}
+	std::cout << "\n------------------------------------\n";
+}
+
+int main(void)
+{
+	int a[10] = { 4,5,1,23,7,2,0,6,9,3 };
+	selectionSort(a, 10);
+	print(a, sizeof(a) / sizeof(int));
+	getchar();
+
+
+	return 0;
+}
+
+
+#endif
