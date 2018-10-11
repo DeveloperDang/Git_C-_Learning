@@ -2628,7 +2628,7 @@ int main(void)
 #endif
 
 //Ñ¡ÔñÅÅĞò
-#if 1
+#if 0
 
 #include <iostream>
 
@@ -2676,6 +2676,56 @@ int main(void)
 	getchar();
 
 
+	return 0;
+}
+
+
+#endif
+
+//Ï£¶ûÅÅĞò µ³ÈÊÀÚ
+#if 1
+#include <iostream>
+
+void swapNum(int *x, int *y)
+{
+	*x = *x ^ *y;
+	*y = *x ^ *y;
+	*x = *x ^ *y;
+}
+
+void print(int *a, int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		std::cout << a[i] << " ";
+	}
+	std::cout << "\n------------------------------------\n";
+}
+
+
+void shellSort(int *a, int n)
+{
+	for (int gap = n / 2; gap > 0; gap /= 2)
+	{
+		for (int i = gap; i < n; i ++)
+		{
+			for (int j = i; j >= gap; j -= gap)
+			{
+				if (a[i] < a[j-gap])
+				{
+					swapNum(&(a[i]), (&a[j-gap]));
+				}
+			}
+		}
+	}
+}
+
+int main(void)
+{
+	int a[10] = { 4,5,1,23,7,2,0,6,9,3 };
+	shellSort(a, 10);
+	print(a, sizeof(a) / sizeof(int));
+	getchar();
 	return 0;
 }
 
