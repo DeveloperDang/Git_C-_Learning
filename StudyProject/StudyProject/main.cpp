@@ -2889,9 +2889,7 @@ int main(void)
 
 #endif
 
-#if 1
-
-
+#if 0
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -3271,4 +3269,32 @@ int main(void)
 	getchar();
 	return 0;
 }
+#endif
+
+#if 1
+
+#include <iostream>
+#include <map>
+#include <string>
+int main(void)
+{
+
+	std::map<std::string, int> iMap;
+	iMap.insert(std::make_pair("Ming", 99));
+	iMap.insert(std::make_pair("Ping", 89));
+	iMap.insert(std::make_pair("Aing", 999));
+	iMap.insert(std::make_pair("Cing", 91));
+
+	std::map<std::string, int>::iterator it = iMap.begin();
+	for (; it != iMap.end(); ++it)
+	{
+		std::cout << it->first << "==="<< it->second;
+		puts("");
+	}
+
+	getchar();
+	return 0;
+}
+
+
 #endif
